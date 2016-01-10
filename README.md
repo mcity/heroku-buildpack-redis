@@ -86,3 +86,9 @@ in your URL.
     redis://:password@example.com:6379
     => Invent username (here "h")
     redis://h:password@example.com:6379
+
+#### Choose the right port
+
+This buildpack assumes that you use the non SSL port in your `REDIS_URL` variable. So it adds `1` to
+this port for the SSL port. So if your SSL port is `6380` you have to set it to `6379` in your
+`REDIS_URL` variable.
