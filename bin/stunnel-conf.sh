@@ -25,7 +25,7 @@ ${STUNNEL_FORCE_SSL_VERSION}
 ciphers = HIGH:!ADH:!AECDH:!LOW:!EXP:!MD5:!3DES:!SRP:!PSK:@STRENGTH
 EOFEOF
 
-for URL in $URLS
+for URL in $(echo $URLS)
 do
   eval URL_VALUE=\$$URL
   PARTS=$(echo $URL_VALUE | perl -lne 'print "$1 $2 $3 $4 $5 $6 $7" if /^([^:]+):\/\/([^:]+):([^@]+)@(.*?):(.*?)(\/(.*?)(\\?.*))?$/')
