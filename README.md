@@ -73,3 +73,16 @@ will need to explicitly tell the buildpack that you need an Stunnel by setting t
 config var to a list of the appropriate config vars:
 
     $ heroku config:add REDIS_STUNNEL_URLS="CACHE_URL SESSION_STORE_URL"
+
+
+### Troubleshooting
+
+#### Redis URLs without a username
+
+This buildpack assumes that every URL is with username and password. As Redis does not support
+usernames but only passwords you may encounter a problem here. Just invent a username and put it
+in your URL.
+
+    redis://:password@example.com:6379
+    => Invent username (here "h")
+    redis://h:password@example.com:6379
