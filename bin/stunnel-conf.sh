@@ -37,8 +37,17 @@ do
   URI_PORT=${URI[4]}
   STUNNEL_PORT=$((URI_PORT + 1))
 
-  echo "Setting ${URL}_STUNNEL config var"
-  export ${URL}_STUNNEL=$URI_SCHEME://$URI_USER:$URI_PASS@127.0.0.1:637${n}
+  STUNNEL_URL=${URI_SCHEME}://$URI_USER:$URI_PASS@127.0.0.1:637${n}
+
+  if [ -z "$URI_PATH" ];
+  then
+    echo "No URI_PATH set"
+  else
+    STUNNEL_URL=${STUNNEL_URL}${URI_PATH}
+  fi
+
+  echo "Setting ${URL} config var with stunnel"
+  export ${URL}=$STUNNEL_URL
 
   cat >> /app/vendor/stunnel/stunnel.conf << EOFEOF
 [$URL]
