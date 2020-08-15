@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-URLS=${REDIS_STUNNEL_URLS:-REDIS_CLOUD_URL}
+URLS=${REDIS_STUNNEL_URLS:-REDIS_URL `compgen -v HEROKU_REDIS`}
 n=1
 
 # Enable this option to prevent stunnel from using SSLv3 with cedar-10
