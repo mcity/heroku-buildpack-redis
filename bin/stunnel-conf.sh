@@ -20,7 +20,7 @@ cat >> /app/vendor/stunnel/stunnel.conf << EOFEOF
 
 [$URL]
 client = yes
-accept = 6379
+accept = 6380
 connect = $STUNNEL_HOSTPORT
 retry = yes
 EOFEOF
