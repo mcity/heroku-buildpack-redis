@@ -9,7 +9,7 @@ Heroku Redis.  It is meant to be used in conjunction with other buildpacks.
 First you need to set this buildpack as your initial buildpack with:
 
 ```console
-$ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-redis.git
+$ heroku buildpacks:set https://github.com/mcity/heroku-buildpack-redis
 ```
 
 Then you can add other buildpack(s) to compile your code like so:
@@ -61,19 +61,9 @@ to any process in the Procfile to run stunnel alongside that process.
 
 Some settings are configurable through app config vars at runtime:
 
-- ``STUNNEL_ENABLED``: Default to true, enable or disable stunnel.
-- ``STUNNEL_FORCE_TLS``: Default is unset. Set this var, to force TLSv1 on cedar-10.
-
-### Multiple Redis Instances
-
-If your application needs to connect to multiple Heroku Redis instances securely, this buildpack
-will automatically create an Stunnel for each color Heroku Redis config var (`HEROKU_REDIS_COLOR`)
-and the `REDIS_URL` config var. If you have Redis urls that aren't in one of these config vars you
-will need to explicitly tell the buildpack that you need an Stunnel by setting the `REDIS_STUNNEL_URLS`
-config var to a list of the appropriate config vars:
-
-    $ heroku config:add REDIS_STUNNEL_URLS="CACHE_URL SESSION_STORE_URL"
-
+- ``STUNNEL_HOSTPORT``: The host and port for the destination endpoint (Redis).  ie.  cache.mvillage.um.city:6380
+- ``REDIS_URL``: Include the username (optional) and password for the destination redis instance.  Point at localhost:6380, which will be the Stunnel endpoint on your Dyno.
+ie. redis://:<password>@localhost:6380
 
 ### Troubleshooting
 
@@ -86,9 +76,3 @@ in your URL.
     redis://:password@example.com:6379
     => Invent username (here "h")
     redis://h:password@example.com:6379
-
-#### Choose the right port
-
-This buildpack assumes that you use the non SSL port in your `REDIS_URL` variable. So it adds `1` to
-this port for the SSL port. So if your SSL port is `6380` you have to set it to `6379` in your
-`REDIS_URL` variable.
